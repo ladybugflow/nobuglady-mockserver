@@ -1,0 +1,228 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>home</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+	<script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="js/home.js"></script>
+    <script type="text/javascript" src="js/jstree/jstree.js"></script>
+    <script type="text/javascript" src="js/editor_help.js"></script>
+    <script type="text/javascript" src="js/editor_log.js"></script>
+    <script type="text/javascript" src="js/editor_terminal.js"></script>
+    <script type="text/javascript" src="js/editor_response.js"></script>
+    
+    <link rel="stylesheet" href="js/jstree/themes/default/style.min.css" />
+	
+	<!-- ace -->
+		
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ace.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.9/ext-language_tools.js"></script>
+	
+	<style type="text/css">
+		.ace-related-code-highlight {
+			border-bottom: 1px solid red;
+		     position:absolute;
+		}
+	</style>
+	
+  </head>
+  <body>
+  	<table>
+  		<tr>
+  			<!-- Left -->
+  			<td valign="top">
+  				<div>
+  					<input type="text" id="plugins4_q" name="plugins4_q"/>
+  				</div>
+ 				<div>
+					<button type="button" class="btn btn-success btn-sm" onclick="demo_create();"><i class="glyphicon glyphicon-asterisk"></i> Create API</button>
+					<button type="button" style="display: none" class="btn btn-warning btn-sm" onclick="demo_rename();"><i class="glyphicon glyphicon-pencil"></i> Rename</button>
+					<button type="button" style="display: none" class="btn btn-danger btn-sm" onclick="demo_delete();"><i class="glyphicon glyphicon-remove"></i> Delete</button>
+				</div>
+  				<div id="jstree_demo" class="overflow-auto" style="height:720px;"></div>
+  			</td>
+  			
+  			<!-- Right -->
+  			<td valign="top">
+  				<table style="margin-left:10px">
+			  		<tr height="20px">
+			  			<td colspan="2" valign="top">
+			  				<table width="100%">
+			  					<tr style="background-color: #d7d7d7;">
+						  			<td height="20px">
+											<div style="padding-left:10px;padding-top:5px;padding-bottom:5px">
+												<b><span id="apiName"></span></b>
+											</div>
+											<p style="display:none">
+										    	 [ <span id="apiId"></span> ]
+										    </p>
+						  			</td>
+						  			<td align="right" style="padding-right:10px">
+						  				<span id="menu"></span>
+						  			</td>
+			  					</tr>
+			  				</table>
+			  			</td>
+			  		</tr>
+			  		<tr>
+			  			<!--  Middle -->
+			  			<td valign="top">
+			  				<div id="folderMessagePanel" style="width:750px;display:none;margin-left:10px">
+								<button type="button" class="btn btn-success btn-sm" onclick="demo_create();"><i class="glyphicon glyphicon-asterisk"></i> Create API</button>
+								<button type="button" class="btn btn-success btn-sm" onclick="demo_create_folder();"><i class="glyphicon glyphicon-asterisk"></i> Create Folder</button>
+								<input type="text" id="plugins4_q_1" name="plugins4_q_1"/>
+			  				</div>
+							<div id="apiPanel" style="display:none">
+			
+							    <div style="border: 1px solid #ccc4c3; padding:5px; border-radius:0.5em">
+								  
+							    	<div class="row mb-2" style="margin-left:10px">
+							    		<div class="col-xs-2" style="margin-right:5px">
+											<a href="#"><i  id="btn_save" class="fas fa-save fa-lg"></i></a>
+										</div>
+										<div class="custom-control custom-switch">
+										  <input type="checkbox" class="custom-control-input" id="customSwitch1">
+										  <label class="custom-control-label" for="customSwitch1"></label>
+										</div>
+										<div class="col"></div>
+										<div class="col"></div>
+										<div id="update_time" class="col" style="float:right"></div>
+									</div>
+								
+								  <div class="row">
+									<form>
+									  <div class="form-row align-items-center" style="margin-left:20px">
+									    <div class="col-auto">
+											<select class="form-control" style="width:auto;" id="req_method" aria-label="">
+											  <option selected value="GET">Get</option>
+											  <option value="POST">Post</option>
+											  <option value="PUT">put</option>
+											  <option value="DELETE">Delete</option>
+											</select>
+									    </div>
+									    <div class="col-auto" style="width: 480px;">
+									      <div class="input-group">
+									        <div class="input-group-prepend">
+									          <div class="input-group-text">/api/</div>
+									        </div>
+									        <input type="text" class="form-control" id="req_path" placeholder="">
+									      </div>
+									    </div>
+									  </div>
+									</form>
+								  </div>
+								</div>
+			
+								<ul class="nav nav-tabs" id="myTab" role="tablist">
+								  <li class="nav-item" id="script-tab-li">
+								    <a class="nav-link active" id="script-tab" data-toggle="tab" href="#script" role="tab" aria-controls="script" aria-selected="true">Script</a>
+								  </li>
+								  <li class="nav-item" id="log-tab-li">
+								    <a class="nav-link" id="log-tab" data-toggle="tab" href="#log" role="tab" aria-controls="log" aria-selected="true">Console</a>
+								  </li>
+								  <li class="nav-item" id="terminal-tab-li">
+								    <a class="nav-link" id="terminal-tab" data-toggle="tab" href="#terminal" role="tab" aria-controls="terminal" aria-selected="true">Terminal</a>
+								  </li>
+								  <li class="nav-item" id="help-tab-li">
+								    <a class="nav-link" id="help-tab" data-toggle="tab" href="#help" role="tab" aria-controls="help" aria-selected="true">HELP</a>
+								  </li>
+								</ul>
+								
+								<!--  Script -->
+								<div class="tab-content" id="myTabContent">
+								  <div class="tab-pane fade show active" id="script" role="tabpanel" aria-labelledby="script-tab">
+			
+									<div style="padding:3px"></div>
+								    <div id="response_div" style="width:600px;height:500px"></div>
+								    <div style="padding:3px"></div>
+			
+								  </div>
+								  <!--  Log -->
+								  <div class="tab-pane fade" id="log" role="tabpanel" aria-labelledby="log-tab">
+								  
+								    <div style="border: 1px solid #ccc4c3; padding:5px; border-radius:0.5em">
+								    	<div class="row" style="margin-left:10px">
+								    		<div class="col-xs-2" style="margin-right:5px">
+												<a href="#"><i  id="btn_refresh" class="fas fa-sync fa-lg"></i></a>
+												<a href="#"><i  id="btn_clear_log" class="fas fa-ban fa-lg"></i></a>
+											</div>
+										</div>
+									</div>
+								
+									<div style="padding:3px"></div>
+								    <div id="log_div" style="width:600px;height:500px"></div>
+								    <div style="padding:3px"></div>
+								    
+								  </div>
+								  <!--  Terminal -->
+								  <div class="tab-pane fade" id="terminal" role="terminalpanel" aria-labelledby="terminal-tab">
+								  
+								    <div style="border: 1px solid #ccc4c3; padding:5px; border-radius:0.5em">
+								    	<div class="row" style="margin-left:10px">
+								    		<div class="col-xs-2" style="margin-right:5px">
+												<a href="#"><i  id="btn_clear_terminal" class="fas fa-ban fa-lg"></i></a>
+											</div>
+										</div>
+									</div>
+								
+									<div style="padding:3px"></div>
+								    <div id="terminal_div" style="width:600px;height:500px"></div>
+								    <div style="padding:3px"></div>
+								    
+								  </div>
+								  <!--  Help -->
+								  <div class="tab-pane fade" id="help" role="helppanel" aria-labelledby="help-tab">
+								
+									<div style="padding:3px"></div>
+								    <div id="help_div" style="width:600px;height:500px"></div>
+								    <div style="padding:3px"></div>
+								    
+								  </div>
+								</div>
+								
+			
+							</div>
+			  			</td>
+			  			
+			  			<!--  Right -->
+			  			<td valign="top" style="padding-left:10px;">
+				  			<div id="apiSettingPanel" style="display:none">
+								<form style="border: 1px solid #ccc4c3; padding:5px;width:270px">
+								  <div class="form-group">
+								    <b><label>Default settings</label></b>
+								  </div>
+								  <div class="form-group">
+								    <label for="res_status">Default Status</label>
+								    <input type="text" class="form-control" id="res_status" placeholder="" value="200">
+								  </div>
+								  <div class="form-group">
+								    <label for="res_content_type">Content-Type</label>
+								    <input type="text" class="form-control" id="res_content_type" placeholder="" value="application/json">
+								  </div>
+								  <div class="form-group">
+								    <label for="res_character_encoding">Character-Encoding</label>
+								    <input type="text" class="form-control" id="res_character_encoding" placeholder="" value="UTF-8">
+								  </div>
+								  <div class="form-group">
+								    <label for="res_body">Response-Body</label>
+								    <textarea id="res_body" class="form-control" rows="10" cols="10"></textarea>
+								  </div>
+								</form>
+				  			</div>
+			  			</td>
+			  		</tr>
+  				</table>
+  			</td>
+  		</tr>
+  	</table>
+
+  </body>
+</html>

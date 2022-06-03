@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>admin</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    
+    <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="js/admin.js"></script>
+	
+  </head>
+  <body>
+  	<table>
+  		<tr>
+  			<!-- ¡ Middle -->
+  			<td valign="top">
+  				<div align="right">
+  					<span id="menu"></span>
+  				</div>
+				<div>
+
+					<ul class="nav nav-tabs" id="myTab" role="tablist">
+					  <li class="nav-item" id="user-tab-li">
+					    <a class="nav-link active" id="user-tab" data-toggle="tab" href="#user" role="tab" aria-controls="user" aria-selected="true">user</a>
+					  </li>
+					  <li class="nav-item" id="role-tab-li">
+					    <a class="nav-link" id="role-tab" data-toggle="tab" href="#role" role="role" aria-controls="role" aria-selected="true">role</a>
+					  </li>
+					  <li class="nav-item" id="permission-tab-li">
+					    <a class="nav-link" id="permission-tab" data-toggle="tab" href="#permission" role="tab" aria-controls="permission" aria-selected="true">permission</a>
+					  </li>
+					</ul>
+					
+					
+					<div class="tab-content" id="myTabContent" style="width:800px">
+					
+					  <!-- £ user -->
+					  <div class="tab-pane fade show active" id="user" role="tabpanel" aria-labelledby="user-tab">
+					  
+					    <div style="border: 1px solid #ccc4c3; padding:5px; border-radius:0.5em">
+					    	<div class="row" style="margin-left:10px">
+					    		<div class="col-xs-2" style="margin-right:5px">
+									<a href="javascript:user_create_click()"><i  id="btn_user_new" class="fas fa-file fa-lg"></i></a>
+								</div>
+							</div>
+						</div>
+					
+						<table class="table table-hover table-dark">
+						  <thead>
+						    <tr>
+						      <th scope="col">ID</th>
+						      <th scope="col">Email</th>
+						      <th scope="col">Name</th>
+						      <th scope="col">Roles</th>
+						      <th scope="col">Remark</th>
+						      <th scope="col"></th>
+						    </tr>
+						  </thead>
+						  <tbody id="userListBody">
+
+						  </tbody>
+						</table>
+
+					  </div>
+					  <!-- £ role -->
+					  <div class="tab-pane fade" id="role" role="tabpanel" aria-labelledby="role-tab">
+					  
+					    <div style="border: 1px solid #ccc4c3; padding:5px; border-radius:0.5em">
+					    	<div class="row" style="margin-left:10px">
+					    		<div class="col-xs-2" style="margin-right:5px">
+									<a href="javascript:role_create_click()"><i  id="btn_role_new" class="fas fa-file fa-lg"></i></a>
+								</div>
+							</div>
+						</div>
+						
+						<table class="table table-hover table-dark">
+						  <thead>
+						    <tr>
+						      <th scope="col">ID</th>
+						      <th scope="col">Role</th>
+						      <th scope="col">Permissions</th>
+						      <th scope="col">Remark</th>
+						      <th scope="col"></th>
+						    </tr>
+						  </thead>
+						  <tbody id="roleListBody">
+
+						  </tbody>
+						</table>
+						
+					  </div>
+
+					  <!-- £ permission -->
+					  <div class="tab-pane fade" id="permission" role="tabpanel" aria-labelledby="permission-tab">
+					  
+					    <div style="border: 1px solid #ccc4c3; padding:5px; border-radius:0.5em">
+					    	<div class="row" style="margin-left:10px">
+					    		<div class="col-xs-2" style="margin-right:5px">
+									<a href="javascript:permission_create_click()"><i  id="btn_permission_new" class="fas fa-file fa-lg"></i></a>
+								</div>
+							</div>
+						</div>
+						
+						<table class="table table-hover table-dark">
+						  <thead>
+						    <tr>
+						      <th scope="col">ID</th>
+						      <th scope="col">Permission</th>
+						      <th scope="col">Detail</th>
+						      <th scope="col">Remark</th>
+						      <th scope="col"></th>
+						    </tr>
+						  </thead>
+						  <tbody id="permissionListBody">
+
+						  </tbody>
+						</table>
+						
+					  </div>
+					</div>
+				</div>
+  			</td>
+  			
+  		</tr>
+  	</table>
+
+<!-- Create user -->
+<div class="modal fade" id="userCreateModal" tabindex="-1" role="dialog" aria-labelledby="userCreateModelTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="userCreateModelTitle">Create User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<form id="user_create_form" class="needs-validation" novalidate oninput='user_repassword.setCustomValidity(user_repassword.value != user_password.value ? "Passwords do not match." : "")'>
+		  <input type="hidden" id="user_id" name="user_id"/>
+		  <div class="form-group">
+		    <label for="user_email">Email address</label>
+		    <input type="text" class="form-control" id="user_email" placeholder="" required pattern=".{1,50}">
+		  </div>
+		  <div class="form-group">
+		    <label for="user_name">Nick name</label>
+		    <input type="text" class="form-control" id="user_name" placeholder="" required pattern=".{1,50}">
+		  </div>
+		  <div class="form-group">
+		    <label for="user_password">Password</label>
+		      <input type="password" class="form-control" id="user_password" name="user_password" placeholder="" required pattern=".{1,50}">
+		      <input type="password" class="form-control" id="user_repassword" name="user_repassword" placeholder="" required pattern=".{1,50}">
+		  </div>
+		   <div id="user_create_list_id">
+		   	
+		   </div>
+		  <div class="form-group">
+		    <label for="user_remarks">Remarks</label>
+		    <textarea class="form-control" id="user_remarks" rows="3"></textarea>
+		  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" onClick="save_user_click()"class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create role -->
+<div class="modal fade" id="roleCreateModal" tabindex="-1" role="dialog" aria-labelledby="roleCreateModelTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="roleCreateModelTitle">Create Role</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<form id="role_create_form" class="needs-validation" novalidate>
+		  <div class="form-group">
+		  	<input type="hidden" id="role_id" name="role_id"/>
+		    <label for="role_name">Role name</label>
+		    <input type="text" class="form-control" id="role_name" placeholder="" required pattern=".{1,50}">
+	        <div class="invalid-feedback">
+	          Please input role name with(1 to 50 characters).
+	        </div>
+		  </div>
+		   <div id="role_create_list_id">
+		   	
+		   </div>
+		  <div class="form-group">
+		    <label for="role_remarks">Remarks</label>
+		    <textarea class="form-control" id="role_remarks" rows="3"></textarea>
+		  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" onClick="save_role_click()" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create permission -->
+<div class="modal fade" id="permissionCreateModal" tabindex="-1" role="dialog" aria-labelledby="permissionCreateModelTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="permissionCreateModelTitle">Create Permission</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<form id="permission_create_form" class="needs-validation" novalidate>
+		  <div class="form-group">
+		  	<input type="hidden" id="permission_id" name="permission_id"/>
+		    <label for="permission_name">Permission name</label>
+		    <input type="text" class="form-control" id="permission_name" placeholder="" required pattern=".{1,50}">
+	        <div class="invalid-feedback">
+	          Please input permission name with(1 to 50 characters).
+	        </div>
+		  </div>
+		  <table class="table">
+		  	<thead>
+			  	<tr>
+			  		<th>Category ID</th>
+			  		<th>Category name</th>
+			  		<th>Read</th>
+			  		<th>Update</th>
+			  	</tr>
+		  	</thead>
+		  	<tbody id="permission_create_list_id">
+
+			  </tbody>
+		  </table>
+		  <div class="form-group">
+		    <label for="permission_remarks">Remarks</label>
+		    <textarea class="form-control" id="permission_remarks" rows="3"></textarea>
+		  </div>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" onClick="save_permission_click()" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModelTitle">Delete</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		Are you sure delete <span id="delete_name"></span> ?
+		<input type="hidden" id="delete_type", name="delete_type"/>
+		<input type="hidden" id="delete_id", name="delete_id"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" onClick="delete_click()" class="btn btn-primary">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </body>
+</html>
